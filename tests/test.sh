@@ -73,7 +73,7 @@ printf "\n"
 # Install requirements if `requirements.yml` is present.
 if [ -f "$PWD/tests/requirements.yml" ]; then
   printf ${green}"Requirements file detected; installing dependencies."${neutral}"\n"
-  docker exec --tty $container_id env TERM=xterm ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml
+  docker exec --tty $container_id env TERM=xterm ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml -v
 fi
 
 printf "\n"

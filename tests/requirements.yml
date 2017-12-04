@@ -6,5 +6,4 @@
   src:  https://github.com/chrnie/ansible-role-icinga2.git
   scm: git
   version: master
-  path: ~/roles/
 
