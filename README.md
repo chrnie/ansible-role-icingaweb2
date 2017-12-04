@@ -1,6 +1,7 @@
 # ansible-role-icingaweb2
 install and configure icingaweb2
 
+[![Build Status](https://travis-ci.org/chrnie/ansible-role-icingaweb2.svg?branch=master)](https://travis-ci.org/chrnie/ansible-role-icingaweb2)
 
 ## Role Variables
 
