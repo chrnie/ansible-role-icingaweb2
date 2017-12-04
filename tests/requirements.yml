@@ -3,7 +3,7 @@
 - src: geerlingguy.mysql
 
 - name: chrnie.icinga2
-  src:  'git+https://github.com/chrnie/ansible-role-icinga2.git,master'
+  src:  https://github.com/chrnie/ansible-role-icinga2.git
   scm: git
   version: master
   path: ~/roles/
