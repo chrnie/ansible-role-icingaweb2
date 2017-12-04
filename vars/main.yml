@@ -1,0 +1,12 @@
+---
+
+icingaweb2_yum_repo:
+  baseurl: http://packages.icinga.com/epel/$releasever/release/
+  gpgkey: http://packages.icinga.com/icinga.key
+icingaweb2_apt_repo:
+  repo: "deb http://packages.icinga.com/{{ansible_os_family|lower}} icinga-{{ansible_distribution_release}} main"
+  gpgkey: http://packages.icinga.com/icinga.key
+
+icw2_centos_scl_ver:
+  "6": "rh-php70"
+  "7": "rh-php71"

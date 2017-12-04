@@ -1,0 +1,22 @@
+---
+
+### Manage package repos
+icingaweb2_manage_repo_icinga: true
+icingaweb2_manage_repo_epel: true
+icingaweb2_manage_repo_scl: true
+
+# Version can be installed,latest,removed,absent,present,build-dep
+icingaweb2_state: present
+
+### includes geerlingguy.mysql
+icingaweb2_manage_mysql: false
+
+### Set php timezone
+icingaweb2_php_timezone: "Europe/Amsterdam"
+
+### icingweb2 db connection
+icingaweb2_user: icingaweb
+icingaweb2_password: icingaweb
+icingaweb2_dbname: icingaweb
+icingaweb2_host: "127.0.0.1"
+icingaweb2_port: 3306

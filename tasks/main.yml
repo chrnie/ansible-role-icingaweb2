@@ -1,0 +1,7 @@
+---
+- name: "Install icingaweb2 on Linux"
+  include_tasks: "install-{{ ansible_os_family }}.yml"
+
+#  tags:
+#    - install
+#    - update
