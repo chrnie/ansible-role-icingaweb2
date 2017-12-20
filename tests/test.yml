@@ -24,6 +24,11 @@
   roles:
     - geerlingguy.mysql
 
+- hosts: all
+  become: True
+  tasks: 
+    - meta: flush_handlers 
+
 # Install and configure icingaweb2, its modules and add-ons
 - hosts: all
   become: True
@@ -37,6 +42,11 @@
     icinga2_feature_ido_password: icinga
   roles:
     - chrnie.icinga2
+
+- hosts: all
+  become: True
+  tasks: 
+    - meta: flush_handlers 
 
 # Install and configure icingaweb2, its modules and add-ons
 - hosts: all
