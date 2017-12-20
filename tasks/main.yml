@@ -2,6 +2,70 @@
 - name: "Install icingaweb2 on Linux"
   include_tasks: "install-{{ ansible_os_family }}.yml"
 
-#  tags:
-#    - install
-#    - update
+- name: create initial directories
+  file:
+    path: "/etc/icingaweb2/{{ item.key }}"
+    state: directory
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+  with_dict: "{{ icingaweb2_config_dirs }}"
+  tags:
+    - install
+
+- name: write initial ini files from templates
+  template:
+    dest: "/etc/icingaweb2/{{ item.key | regex_replace('^(.*)_(...).j2$', '\\1.\\2') }}"
+    src: "templates/{{ item.key }}"
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+    force: no
+  with_dict: "{{ icingaweb2_config_templates }}"
+  tags:
+    - install
+
+- name: Enable icingaweb2 modules
+  file:
+    src: "/usr/share/icingaweb2/modules/{{item}}"
+    dest: "/etc/icingaweb2/enabledModules/{{item}}"
+    owner: "{{os_apache_user[ansible_os_family]}}"
+    group: icingaweb2
+    state: link
+  with_items: "{{icingaweb2_modules}}"
+
+- name: Check Icinga 2 schema version
+  command: mysql -u "{{ icingaweb2_db_user }}" -p"{{ icingaweb2_db_password }}" "{{ icingaweb2_db_name }}" -Ns -e "select name from icingaweb_user where name = '{{icingaweb2_admin_user}}';"
+  ignore_errors: yes
+  changed_when: False
+  register: schema_result
+
+- name: Import icingaweb2 schema
+  mysql_db:
+    state: import
+    name: "{{ icingaweb2_db_name }}"
+    target: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
+  ignore_errors: yes
+  register: schema_import
+  when: schema_result.stderr | match("ERROR.*Table 'icingaweb.icingaweb_user'")
+
+- name: Import initial icingaweb user
+  mysql_db:
+    state: import
+    name: "{{ icingaweb2_db_name }}"
+    target: /etc/icingaweb2/icingaweb_add_user.sql
+  ignore_errors: yes
+  when: ( schema_result.rc == 0 and not ( schema_result.stdout | match(icingaweb2_admin_user)) )
+        or schema_import.changed
+
+- name: generate ticket on the icinga master and save it as a variable
+  shell: "icingacli module setup token create"
+  register: "icingaweb2_ticket"
+  changed_when: False
+  tags:
+    - install
+
+- name: "Continue on http://kerrigan.bug.int/icingaweb2/setup"
+  debug:
+    msg: "{{icingaweb2_ticket.stdout}}"
+  ignore_errors: '{{ ansible_check_mode }}'

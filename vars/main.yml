@@ -10,3 +10,70 @@ icingaweb2_apt_repo:
 icw2_centos_scl_ver:
   "6": "rh-php70"
   "7": "rh-php71"
+
+# initial config vars
+
+icinga2_backend: icinga_ido
+icingaweb2_backend: icingaweb_db
+
+# initial config files
+
+icingaweb2_config_dirs:
+  '.':
+    owner: "root"
+    group: "icingaweb2"
+    mode: "2770"
+  'modules':
+    owner: "root"
+    group: "icingaweb2"
+    mode: "2770"
+  'modules/monitoring':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "2770"
+  'enabledModules':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "2750"
+
+icingaweb2_config_templates:
+  'resources_ini.j2':
+    owner: "apache"
+    group: "root"
+    mode: "0644"
+  'groups_ini.j2':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "0660"
+  'config_ini.j2':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "0660"
+  'roles_ini.j2':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "0660"
+  'authentication_ini.j2':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "0660"
+  'modules/monitoring/backends_ini.j2':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "0660"
+  'modules/monitoring/commandtransports_ini.j2':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "0660"
+  'modules/monitoring/config_ini.j2':
+    owner: "apache"
+    group: "icingaweb2"
+    mode: "0660"
+  'icingaweb_add_user_sql.j2':
+    owner: "root"
+    group: "root"
+    mode: "0640"
+
+os_apache_user:
+  RedHat: apache
+  Debian: www-data

@@ -1,0 +1,8 @@
+/**
+ * This APIUser has been created by ansible for icingaweb2 command transport
+ */
+object ApiUser "{{ icingaweb2_api_user }}" {
+  password = "{{ icingaweb2_api_password }}"
+
+  permissions = [ "*" ]
+}
