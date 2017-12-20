@@ -1,10 +1,10 @@
 ---
-# 003 Install mariaDB and init databases
+
+# Install and configure icingaweb2, its modules and add-ons
 - hosts: all
   become: True
-  roles:
-    name: geerlingguy.mysql
   vars:
+    mysql_root_password: super-secure-password
     mysql_databases:
       - name: icinga
         collation: utf8_general_ci
@@ -16,18 +16,12 @@
       - name: icinga
         host: "%"
         password: icinga
-        priv: 'icinga'.*:ALL"
+        priv: "'icinga'.*:ALL"
       - name: icingaweb
         host: "%"
         password: icingaweb
-        priv: 'icingaweb'.*:ALL"
-
-# 005 install and configure icinga2
-- hosts: all
-  become: True
-  vars:
+        priv: "'icingaweb'.*:ALL"
     icinga2_master_fqdn: localhost
-    mysql_root_password: super-secure-password
     icinga2_role: master
     icinga2_features: [ "ido-mysql", "checker", "api", "notification", "mainlog" ]
     icinga2_manage_mysql: true
@@ -35,10 +29,6 @@
     icinga2_feature_ido_user: icinga
     icinga2_feature_ido_password: icinga
   roles:
-    - { role: chrnie.icinga2 }
-
-# Install and configure icingaweb2, its modules and add-ons
-- hosts: all
-  become: True
-  roles:
+    - geerlingguy.mysql
+    - chrnie.icinga2
     - role_under_test
