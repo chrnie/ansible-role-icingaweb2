@@ -16,11 +16,11 @@
       - name: icinga
         host: "%"
         password: icinga
-        priv: "'icinga'.*:ALL"
+        priv: "icinga.*:ALL"
       - name: icingaweb
         host: "%"
         password: icingaweb
-        priv: "'icingaweb'.*:ALL"
+        priv: "icingaweb.*:ALL"
   roles:
     - geerlingguy.mysql
 
