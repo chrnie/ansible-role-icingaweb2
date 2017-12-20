@@ -21,6 +21,13 @@
         host: "%"
         password: icingaweb
         priv: "'icingaweb'.*:ALL"
+  roles:
+    - geerlingguy.mysql
+
+# Install and configure icingaweb2, its modules and add-ons
+- hosts: all
+  become: True
+  vars:
     icinga2_master_fqdn: localhost
     icinga2_role: master
     icinga2_features: [ "ido-mysql", "checker", "api", "notification", "mainlog" ]
@@ -29,6 +36,18 @@
     icinga2_feature_ido_user: icinga
     icinga2_feature_ido_password: icinga
   roles:
-    - geerlingguy.mysql
     - chrnie.icinga2
+
+# Install and configure icingaweb2, its modules and add-ons
+- hosts: all
+  become: True
+  vars:
+    icinga2_master_fqdn: localhost
+    icinga2_role: master
+    icinga2_features: [ "ido-mysql", "checker", "api", "notification", "mainlog" ]
+    icinga2_manage_mysql: true
+    icinga2_feature_ido_dbname: icinga
+    icinga2_feature_ido_user: icinga
+    icinga2_feature_ido_password: icinga
+  roles:
     - role_under_test
