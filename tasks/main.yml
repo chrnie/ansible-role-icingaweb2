@@ -35,7 +35,7 @@
   mysql_db:
     state: import
     name: "{{ icingaweb2_db_name }}"
-    target: "/usr/share/doc/icingaweb2/schema/mysql.schema.sql"
+    target: "{{ os_icingaweb2_schema[ansible_os_family] }}"
   ignore_errors: yes
   register: schema_import
   when: schema_result.stderr | match("ERROR.*Table 'icingaweb.icingaweb_user'")

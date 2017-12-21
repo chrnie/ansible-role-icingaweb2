@@ -88,9 +88,12 @@ director_config_templates:
     group: "icingaweb2"
     mode: "0660"
 
+os_icingaweb2_schema:
+  Debian: /usr/share/icingaweb2/etc/schema/mysql.schema.sql
+  RedHat: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
 os_apache_user:
-  RedHat: apache
   Debian: www-data
+  RedHat: apache
 os_icinga2_user:
   Debian: nagios
   RedHat: icinga

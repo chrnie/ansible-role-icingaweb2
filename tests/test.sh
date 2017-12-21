@@ -101,11 +101,11 @@ fi
 
 docker exec $container_id env TERM=xterm echo "FIND SCHEMA"
 docker exec $container_id env TERM=xterm find / -name "mysql.schema.sql"
-docker exec $container_id env TERM=xterm echo "grep schema in rpm"
-docker exec $container_id env TERM=xterm rpm -ql icingaweb2|grep mysql.schema.sql
-docker exec $container_id env TERM=xterm echo "ls /usr/share/doc/icingaweb2/schema/mysql.schema.sql"
-docker exec $container_id env TERM=xterm ls /usr/share/doc/icingaweb2/schema/
-docker exec $container_id env TERM=xterm yum install mlocate -y; updatedb; locate schema.sql
+#docker exec $container_id env TERM=xterm echo "grep schema in rpm"
+#docker exec $container_id env TERM=xterm rpm -ql icingaweb2|grep mysql.schema.sql
+#docker exec $container_id env TERM=xterm echo "ls /usr/share/doc/icingaweb2/schema/mysql.schema.sql"
+#docker exec $container_id env TERM=xterm ls /usr/share/doc/icingaweb2/schema/
+#docker exec $container_id env TERM=xterm yum install mlocate -y; updatedb; locate schema.sql
 
 # Remove the Docker container (if configured).
 if [ "$cleanup" = true ]; then
