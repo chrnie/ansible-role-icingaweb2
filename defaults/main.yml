@@ -17,11 +17,16 @@ icingaweb2_admin_group: Administrators
 icingaweb2_modules: 
   - doc
   - monitoring
+  - director
 
 # icinga2 api-user
+create_icingaweb2_api_users: yes
+icingaweb2_icinga_conf_path: /etc/icinga2/conf.d/icingaweb2-api-users.conf
 icingaweb2_api_user: icingaweb2
 icingaweb2_api_password: notsecuredefault
-icingaweb2_master_fqdn: localhost
+icingaweb2_master_fqdn: localhost.localdomain
+director_api_user: director
+director_api_password: notsecuredefault
 
 ### Set php timezone
 icingaweb2_php_timezone: "Europe/Amsterdam"
@@ -42,6 +47,12 @@ icinga2_ido_dbname: icinga
 icinga2_ido_host: "127.0.0.1"
 icinga2_ido_port: 3306
 
-# module Settings:
-
-icw2_director: {}
+# Modules
+## director settings
+director_release: v1.4.2
+director_db_type: mysql
+director_db_user: director
+director_db_password: director
+director_db_name: director
+director_db_host: "127.0.0.1"
+director_db_port: 3306

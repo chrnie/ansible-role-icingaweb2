@@ -20,19 +20,10 @@
     owner: "{{ item.value.owner }}"
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode }}"
-    force: no
+    force: yes
   with_dict: "{{ icingaweb2_config_templates }}"
   tags:
     - install
-
-- name: Enable icingaweb2 modules
-  file:
-    src: "/usr/share/icingaweb2/modules/{{item}}"
-    dest: "/etc/icingaweb2/enabledModules/{{item}}"
-    owner: "{{os_apache_user[ansible_os_family]}}"
-    group: icingaweb2
-    state: link
-  with_items: "{{icingaweb2_modules}}"
 
 - name: Check Icinga 2 schema version
   command: mysql -u "{{ icingaweb2_db_user }}" -p"{{ icingaweb2_db_password }}" "{{ icingaweb2_db_name }}" -Ns -e "select name from icingaweb_user where name = '{{icingaweb2_admin_user}}';"
@@ -58,14 +49,27 @@
   when: ( schema_result.rc == 0 and not ( schema_result.stdout | match(icingaweb2_admin_user)) )
         or schema_import.changed
 
-- name: generate ticket on the icinga master and save it as a variable
-  shell: "icingacli module setup token create"
-  register: "icingaweb2_ticket"
-  changed_when: False
+- name: director config ini
+  template:
+    dest: "{{ icingaweb2_icinga_conf_path }}"
+    src: "templates/api-user-icingaweb_conf.j2"
+    owner: "{{os_icinga2_user[ansible_os_family]}}"
+    group: "{{os_icinga2_group[ansible_os_family]}}"
+    mode: "0660"
+  when: create_icingaweb2_api_users
   tags:
     - install
 
-- name: "Continue on http://kerrigan.bug.int/icingaweb2/setup"
-  debug:
-    msg: "{{icingaweb2_ticket.stdout}}"
-  ignore_errors: '{{ ansible_check_mode }}'
+- name: "include director"
+  include_tasks: "module_director.yml"
+  when: director in icingaweb2_modules
+
+- name: Enable icingaweb2 modules
+  file:
+    src: "/usr/share/icingaweb2/modules/{{item}}"
+    dest: "/etc/icingaweb2/enabledModules/{{item}}"
+    owner: "{{os_apache_user[ansible_os_family]}}"
+    group: icingaweb2
+    state: link
+  with_items: "{{icingaweb2_modules}}"
+

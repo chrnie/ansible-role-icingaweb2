@@ -15,6 +15,8 @@ icw2_centos_scl_ver:
 
 icinga2_backend: icinga_ido
 icingaweb2_backend: icingaweb_db
+director_backend: director
+
 
 # initial config files
 
@@ -74,6 +76,22 @@ icingaweb2_config_templates:
     group: "root"
     mode: "0640"
 
+director_config_templates:
+  'modules/director/config_ini.j2':
+    owner: "{{os_apache_user[ansible_os_family]}}"
+    group: "icingaweb2"
+    mode: "0660"
+  'modules/director/kickstart_ini.j2':
+    owner: "{{os_apache_user[ansible_os_family]}}"
+    group: "icingaweb2"
+    mode: "0660"
+
 os_apache_user:
   RedHat: apache
   Debian: www-data
+os_icinga2_user:
+  Debian: nagios
+  RedHat: icinga
+os_icinga2_group:
+  Debian: nagios
+  RedHat: icinga

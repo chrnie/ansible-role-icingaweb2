@@ -31,6 +31,7 @@
     state: "{{ icingaweb2_state }}"
   register: track_icingaweb2_install
   with_items:
+    - git
     - icingaweb2
     - icingacli
     - httpd
