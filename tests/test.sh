@@ -99,6 +99,7 @@ if [ "$test_idempotence" = true ]; then
     || (printf ${red}'Idempotence test: fail'${neutral}"\n" && exit 1)
 fi
 
+docker exec $container_id env TERM=xterm echo "FIND SCHEMA"
 docker exec $container_id env TERM=xterm find / -name "mysql.schema.sql"
 
 # Remove the Docker container (if configured).
