@@ -7,7 +7,7 @@
   tasks:
     - lineinfile:
         path: /etc/yum.conf
-        regexp: '^tsflags=.*'
+        regexp: '^tsflags='
 	state: absent
 
 # Install and configure icingaweb2, its modules and add-ons
