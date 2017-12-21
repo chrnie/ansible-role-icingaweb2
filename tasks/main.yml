@@ -25,7 +25,7 @@
   tags:
     - install
 
-- name: Check Icinga 2 schema version
+- name: Check icingaweb2 schema version
   command: mysql -u "{{ icingaweb2_db_user }}" -p"{{ icingaweb2_db_password }}" "{{ icingaweb2_db_name }}" -Ns -e "select name from icingaweb_user where name = '{{icingaweb2_admin_user}}';"
   ignore_errors: yes
   changed_when: False
