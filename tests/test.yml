@@ -9,6 +9,8 @@
         path: /etc/yum.conf
         regexp: '^tsflags='
         state: absent
+      when: ansible_os_family == RedHat
+
 
 # Install and configure icingaweb2, its modules and add-ons
 - hosts: all
