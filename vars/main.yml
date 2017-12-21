@@ -75,6 +75,7 @@ icingaweb2_config_templates:
     owner: "root"
     group: "root"
     mode: "0640"
+    force: no
 
 director_config_templates:
   'modules/director/config_ini.j2':

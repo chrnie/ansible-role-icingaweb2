@@ -20,7 +20,7 @@
     owner: "{{ item.value.owner }}"
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode }}"
-    force: yes
+    force: "{{ 'yes' if item.value.force is defined and item.value.force == 'yes' else 'no'}}"
   with_dict: "{{ icingaweb2_config_templates }}"
   tags:
     - install
@@ -35,7 +35,7 @@
   mysql_db:
     state: import
     name: "{{ icingaweb2_db_name }}"
-    target: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
+    target: "/usr/share/doc/icingaweb2/schema/mysql.schema.sql"
   ignore_errors: yes
   register: schema_import
   when: schema_result.stderr | match("ERROR.*Table 'icingaweb.icingaweb_user'")
@@ -49,7 +49,7 @@
   when: ( schema_result.rc == 0 and not ( schema_result.stdout | match(icingaweb2_admin_user)) )
         or schema_import.changed
 
-- name: director config ini
+- name: copy api users to icinga2
   template:
     dest: "{{ icingaweb2_icinga_conf_path }}"
     src: "templates/api-user-icingaweb_conf.j2"
@@ -57,8 +57,15 @@
     group: "{{os_icinga2_group[ansible_os_family]}}"
     mode: "0660"
   when: create_icingaweb2_api_users
+  notify: Test config before restart icinga 2
   tags:
     - install
+
+- name: restart icinga after change
+  meta: flush_handlers
+  tags:
+    - install
+    - config
 
 - name: "include director"
   include_tasks: "module_director.yml"

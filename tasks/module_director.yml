@@ -17,7 +17,6 @@
     owner: "{{ item.value.owner }}"
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode }}"
-    force: no
   with_dict: "{{ director_config_templates }}"
   tags:
     - install
