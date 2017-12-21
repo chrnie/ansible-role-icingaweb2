@@ -17,6 +17,7 @@ icinga2_backend: icinga_ido
 icingaweb2_backend: icingaweb_db
 director_backend: director
 
+icinga2_binary: /usr/sbin/icinga2
 
 # initial config files
 
