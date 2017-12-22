@@ -10,3 +10,9 @@
   service:
     name: icinga2
     state: restarted
+
+- name: kickstart director
+  shell: icingacli director kickstart run
+
+- name: director migration run
+  shell: icingacli director migration run

@@ -18,6 +18,7 @@
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode }}"
   with_dict: "{{ director_config_templates }}"
+  notify: kickstart director
   tags:
     - install
 
@@ -25,3 +26,4 @@
     repo: 'https://github.com/Icinga/icingaweb2-module-director.git'
     dest: /usr/share/icingaweb2/modules/director
     version: "{{ director_release }}"
+  notify: director migration run
