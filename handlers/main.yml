@@ -16,3 +16,7 @@
 
 - name: director migration run
   shell: icingacli director migration run
+
+- name:  director migrate and kickstart
+  shell: icingacli director migration run
+  notify: kickstart director

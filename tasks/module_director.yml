@@ -18,7 +18,7 @@
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode }}"
   with_dict: "{{ director_config_templates }}"
-  notify: kickstart director
+  notify: director migrate and kickstart
   tags:
     - install
 
