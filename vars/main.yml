@@ -88,6 +88,12 @@ director_config_templates:
     group: "icingaweb2"
     mode: "0660"
 
+graphite_config_templates:
+  'modules/graphite/config_ini.j2':
+    owner: "{{os_apache_user[ansible_os_family]}}"
+    group: "icingaweb2"
+    mode: "0660"
+
 os_icingaweb2_schema:
   Debian: /usr/share/icingaweb2/etc/schema/mysql.schema.sql
   RedHat: /usr/share/doc/icingaweb2/schema/mysql.schema.sql

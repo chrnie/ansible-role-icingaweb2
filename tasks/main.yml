@@ -71,6 +71,10 @@
   include_tasks: "module_director.yml"
   when: director in icingaweb2_modules
 
+- name: "include graphite"
+  include_tasks: "module_graphite.yml"
+  when: director in icingaweb2_modules
+
 - name: Enable icingaweb2 modules
   file:
     src: "/usr/share/icingaweb2/modules/{{item}}"
