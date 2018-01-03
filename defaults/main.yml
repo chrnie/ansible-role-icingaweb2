@@ -22,7 +22,7 @@ icingaweb2_modules:
 
 # icinga2 api-user
 create_icingaweb2_api_users: yes
-icingaweb2_icinga_conf_path: /etc/icinga2/conf.d/icingaweb2-api-users.conf
+icingaweb2_icinga_conf_path: /etc/icinga2/custom_conf.d/icingaweb2-api-users.conf
 icingaweb2_api_user: icingaweb2
 icingaweb2_api_password: notsecuredefault
 icingaweb2_master_fqdn: localhost.localdomain
