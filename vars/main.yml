@@ -11,16 +11,10 @@ icw2_centos_scl_ver:
   "6": "rh-php70"
   "7": "rh-php71"
 
-# initial config vars
-
-icinga2_backend: icinga_ido
-icingaweb2_backend: icingaweb_db
-director_backend: director
 
 icinga2_binary: /usr/sbin/icinga2
 
 # initial config files
-
 icingaweb2_config_dirs:
   '.':
     owner: "root"
@@ -78,28 +72,15 @@ icingaweb2_config_templates:
     mode: "0640"
     force: no
 
-director_config_templates:
-  'modules/director/config_ini.j2':
-    owner: "{{os_apache_user[ansible_os_family]}}"
-    group: "icingaweb2"
-    mode: "0660"
-  'modules/director/kickstart_ini.j2':
-    owner: "{{os_apache_user[ansible_os_family]}}"
-    group: "icingaweb2"
-    mode: "0660"
-
-graphite_config_templates:
-  'modules/graphite/config_ini.j2':
-    owner: "{{os_apache_user[ansible_os_family]}}"
-    group: "icingaweb2"
-    mode: "0660"
-
 os_icingaweb2_schema:
   Debian: /usr/share/icingaweb2/etc/schema/mysql.schema.sql
   RedHat: /usr/share/doc/icingaweb2/schema/mysql.schema.sql
 os_apache_user:
   Debian: www-data
   RedHat: apache
+os_webserver:
+  "RedHat": httpd
+  "Debian": apache2
 os_icinga2_user:
   Debian: nagios
   RedHat: icinga
